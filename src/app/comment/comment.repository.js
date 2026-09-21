@@ -98,7 +98,11 @@ async function getCommentWithUserPost(id){
         id : +(id)
     },
     include :{
-        user : true,
+        user : {
+            omit:{
+                password:true
+            }
+        },
         post: true
     }
 
