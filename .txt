@@ -1,0 +1,20 @@
+
+how token created?
+
+POST /auth/login
+       ↓
+email + password
+       ↓
+JWT created
+       ↓
+accessToken ← انسخي هذا
+       ↓
+GET /protected-route
+       ↓
+Bearer Token
+       ↓
+authGuard
+       ↓
+jwt.verify()
+       ↓
+next()

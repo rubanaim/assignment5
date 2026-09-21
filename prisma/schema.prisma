@@ -1,0 +1,67 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  user
+  admin
+
+  @@map("user_role")
+}
+
+//prisma case sensitive
+model User {
+id Int @id @default(autoincrement())
+name String @db.VarChar(150)
+email String @unique
+password String @map("password_hash")
+role String @default("user") 
+createdAt DateTime @default(now()) @map("created_at") 
+updatedAt DateTime @default(now()) @map("updated_at")
+isDeleted Boolean @default(false) @map("is_deleted")
+
+posts Post[]
+comments Comment[]
+
+@@map("users") // users
+
+}
+
+model Post{
+  id Int @id @default(autoincrement())
+  title String @db.VarChar(100)
+  content String 
+  userId Int @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  isDeleted Boolean @default(false) @map("is_deleted")
+
+  // add virtual filed
+  user User @relation(fields: [userId], references : [id], onDelete: Cascade)
+
+  comments Comment[]
+
+  @@map("posts") //posts
+}
+
+model Comment{
+  id Int @id @default(autoincrement())
+  content String
+  postId Int @map("post_id")
+  userId Int @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  isDeleted Boolean @default(false) @map("is_deleted")
+   
+   //add virtual field
+   user User @relation(fields : [userId], references : [id], onDelete: Cascade)
+   post Post @relation(fields : [postId], references : [id], onDelete: Cascade)
+
+  @@map("comments")
+}

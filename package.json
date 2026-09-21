@@ -1,0 +1,14 @@
+{
+  "main":"src/main.js",
+  "scripts":{
+    "dev" :"node --watch ."
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.1",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3"
+    
+  }
+}
